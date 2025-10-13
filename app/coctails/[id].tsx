@@ -1,35 +1,38 @@
 import { ThemeContext } from '@/context/ThemeContext';
-import { Drink } from '@/types';
+import useFetch from '@/hooks/useFetch';
+import { Drink, Drinks } from '@/types';
 import { Image } from 'expo-image';
 import { useLocalSearchParams } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 export default function CoctailScreen() {
     const { id } = useLocalSearchParams();
-    const { colors, theme, toggleTheme } = useContext(ThemeContext)
+    const { colors } = useContext(ThemeContext)
 
-    const [coctail, setCoctail] = useState<Drink | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const { data: { drinks: coctail }, loading, error } = useFetch<Drinks | null>(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+
+    // const [coctail, setCoctail] = useState<Drink | null>(null);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState('');
 
     const getIngredient = (i: number) => (coctail as any)[`strIngredient${i}`] as string | null;
     const getMeasure = (i: number) => (coctail as any)[`strMeasure${i}`] as string | null;
 
-    useEffect(() => {
-        try {
-            setLoading(true);
-            fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    setCoctail(data.drinks[0]);
-                });
-        } catch (error) {
-            setError('Failed to fetch cocktail data.');
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    // useEffect(() => {
+    //     try {
+    //         setLoading(true);
+    //         fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    //             .then((response) => response.json())
+    //             .then((data) => {
+    //                 setCoctail(data.drinks[0]);
+    //             });
+    //     } catch (error) {
+    //         setError('Failed to fetch cocktail data.');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }, []);
 
     if (loading) {
         return (

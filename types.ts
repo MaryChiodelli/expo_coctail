@@ -51,3 +51,7 @@ export type Drink = {
     strCreativeCommonsConfirmed: string | null;
     dateModified: string | null;
 }
+
+export type Drinks = {
+    drinks: Drink[] | null;
+};
