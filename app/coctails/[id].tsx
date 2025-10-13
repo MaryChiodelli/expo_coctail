@@ -1,10 +1,9 @@
 import { ThemeContext } from '@/context/ThemeContext';
 import { Drink } from '@/types';
 import { Image } from 'expo-image';
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, Button, ScrollView, Text, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 export default function CoctailScreen() {
     const { id } = useLocalSearchParams();
@@ -51,7 +50,7 @@ export default function CoctailScreen() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.background, padding: 20 }}>
+        <View style={{ flex: 1, backgroundColor: colors.background, padding: 20 }}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ alignItems: 'center', backgroundColor: colors.card, borderRadius: 16, padding: 20, shadowColor: colors.border, shadowOpacity: 0.2, shadowRadius: 8, marginBottom: 24 }}>
                     <Image
@@ -79,11 +78,7 @@ export default function CoctailScreen() {
                     <Text style={{ fontSize: 20, fontWeight: '600', color: colors.primary, marginBottom: 8 }}>Instructions</Text>
                     <Text style={{ fontSize: 16, color: colors.text, lineHeight: 22 }}>{coctail.strInstructions}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Button title="Go back" color={colors.primary} onPress={() => router.back()} />
-                    <Button title={theme === 'light' ? 'Dark Mode' : 'Light Mode'} color={colors.secondary} onPress={toggleTheme} />
-                </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }

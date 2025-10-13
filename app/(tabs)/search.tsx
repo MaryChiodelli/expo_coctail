@@ -55,6 +55,7 @@ export default function SearchScreen() {
               borderRadius: 5,
               padding: 10,
               marginTop: 10,
+              color: colors.text,
             }}
           />
 
