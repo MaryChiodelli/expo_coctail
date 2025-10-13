@@ -53,5 +53,5 @@ export type Drink = {
 }
 
 export type Drinks = {
-    drinks: Drink[] | null;
+    drinks: Drink[];
 };

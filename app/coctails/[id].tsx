@@ -1,6 +1,6 @@
 import { ThemeContext } from '@/context/ThemeContext';
 import useFetch from '@/hooks/useFetch';
-import { Drink, Drinks } from '@/types';
+import { Drinks } from '@/types';
 import { Image } from 'expo-image';
 import { useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
@@ -8,9 +8,35 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 export default function CoctailScreen() {
     const { id } = useLocalSearchParams();
-    const { colors } = useContext(ThemeContext)
+    const { colors } = useContext(ThemeContext);
 
-    const { data: { drinks: coctail }, loading, error } = useFetch<Drinks | null>(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+    // type CoctailParams = {
+    //     drinks: Drink[] | null;
+    //     loading: boolean;
+    //     error: string | null;
+    // };
+
+    const { data, loading, error } = useFetch<Drinks>(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+
+    if (loading) {
+        return (
+            <ActivityIndicator />
+        );
+    }
+
+    if (error) {
+        return (
+            <View>
+                <Text>{error}</Text>
+            </View>
+        );
+    }
+
+    if (!data || !data.drinks || data.drinks.length === 0) {
+        return <Text style={{ color: colors.text }}>No cocktail found.</Text>;
+    }
+
+    const coctail = data.drinks[0];
 
     // const [coctail, setCoctail] = useState<Drink | null>(null);
     // const [loading, setLoading] = useState(true);
@@ -34,23 +60,7 @@ export default function CoctailScreen() {
     //     }
     // }, []);
 
-    if (loading) {
-        return (
-            <ActivityIndicator />
-        );
-    }
 
-    if (error) {
-        return (
-            <View>
-                <Text>{error}</Text>
-            </View>
-        );
-    }
-
-    if (!coctail) {
-        return <Text style={{ color: colors.text }}>No cocktail found.</Text>;
-    }
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.background, padding: 20 }}>
