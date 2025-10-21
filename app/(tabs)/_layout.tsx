@@ -15,6 +15,7 @@ export default function TabsLayout() {
     }}>
       <Tabs.Screen name="index" options={{ title: "Home", headerTitle: "Expo Coctails", tabBarIcon: () => <Ionicons name="home" size={24} color={colors.text} />, headerRight: () => <ToggleThemeButton /> }} />
       <Tabs.Screen name="search" options={{ title: "Search", headerTitle: "Search", tabBarIcon: () => <Ionicons name="search" size={24} color={colors.text} />, headerRight: () => <ToggleThemeButton /> }} />
+      <Tabs.Screen name="settings" options={{ title: "Settings", headerTitle: "Settings", tabBarIcon: () => <Ionicons name="settings" size={24} color={colors.text} />, headerRight: () => <ToggleThemeButton /> }} />
     </Tabs>
   )
 }
