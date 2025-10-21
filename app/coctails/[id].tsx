@@ -10,12 +10,6 @@ export default function CoctailScreen() {
     const { id } = useLocalSearchParams();
     const { colors } = useContext(ThemeContext);
 
-    // type CoctailParams = {
-    //     drinks: Drink[] | null;
-    //     loading: boolean;
-    //     error: string | null;
-    // };
-
     const { data, loading, error } = useFetch<Drinks>(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
 
     if (loading) {
@@ -38,27 +32,8 @@ export default function CoctailScreen() {
 
     const coctail = data.drinks[0];
 
-    // const [coctail, setCoctail] = useState<Drink | null>(null);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState('');
-
     const getIngredient = (i: number) => (coctail as any)[`strIngredient${i}`] as string | null;
     const getMeasure = (i: number) => (coctail as any)[`strMeasure${i}`] as string | null;
-
-    // useEffect(() => {
-    //     try {
-    //         setLoading(true);
-    //         fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 setCoctail(data.drinks[0]);
-    //             });
-    //     } catch (error) {
-    //         setError('Failed to fetch cocktail data.');
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }, []);
 
 
 
